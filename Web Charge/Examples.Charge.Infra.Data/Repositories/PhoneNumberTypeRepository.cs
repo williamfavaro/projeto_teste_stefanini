@@ -17,5 +17,36 @@ namespace Examples.Charge.Infra.Data.Repositories
         }
 
         public async Task<IEnumerable<PhoneNumberType>> FindAllAsync() => await Task.Run(() => _context.PhoneNumberType);
+
+        public async Task<bool> InsertPhoneNumberType(PhoneNumberType phoneNumberType)
+        {
+            await _context.AddAsync(phoneNumberType);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> UpdatePhoneNumberType(PhoneNumberType phoneNumberType)
+        {
+            _context.Update(phoneNumberType);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeletePhoneNumberType(int phoneNumberTypeID)
+        {
+            var phoneNumberType = await _context.PhoneNumberType.FindAsync(phoneNumberTypeID);
+
+            if (phoneNumberType != null)
+            {
+                _context.Remove(phoneNumberType);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

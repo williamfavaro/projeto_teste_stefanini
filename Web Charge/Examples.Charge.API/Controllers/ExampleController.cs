@@ -4,6 +4,7 @@ using Examples.Charge.Application.Interfaces;
 using Examples.Charge.Application.Messages.Request;
 using Examples.Charge.Application.Messages.Response;
 using System.Threading.Tasks;
+using Examples.Charge.Domain.Aggregates.ExampleAggregate;
 
 namespace Examples.Charge.API.Controllers
 {
@@ -32,5 +33,17 @@ namespace Examples.Charge.API.Controllers
         {
             return Response(0, null);
         }
+
+        [HttpPost("InsertExample")]
+        public async Task<IActionResult> InsertExample(Example example) =>
+            Ok(await _facade.InsertExample(example));
+
+        [HttpPut("UpdateExample")]
+        public async Task<IActionResult> UpdateExample(Example example) =>
+            Ok(await _facade.UpdateExample(example));
+
+        [HttpDelete("DeleteExample/{id}")]
+        public async Task<IActionResult> DeleteExample(int id) =>
+            Ok(await _facade.DeleteExample(id));
     }
 }
